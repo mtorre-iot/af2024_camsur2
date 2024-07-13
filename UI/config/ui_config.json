@@ -1,0 +1,210 @@
+{
+    "general": {
+        "port": 8888,
+        "port_help": "UI web port",
+        "model_dir": "model/",
+        "temp_model_dir": "temp/",
+        "model_state_file_name": "model.json",
+        "model_file_lock_name": "model.lock"
+    },
+    "env": {
+        "web_port": "WEB_PORT"
+    },
+    "template": {
+        "design": "native",
+        "theme": "dark"
+    },
+    "header": {
+        "title": "Camera Surveillance (CamSur)"
+    },
+    "widgetboxes": {
+        "template":{
+            "name": "Master",
+            "sizing_mode": "stretch_width"
+        },
+        "header": {
+            "name": "Header",
+            "height": 80,
+            "sizing_mode": "stretch_width"
+        },
+        "body1": {
+            "name": "Body1",
+            "sizing_mode": "stretch_width"
+        },
+        "body2": {
+            "name": "Body2",
+            "sizing_mode": "stretch_width"
+        },
+        "inputs": {
+            "name": "Controls",
+            "title": "# Controls",
+            "height": 200,
+            "sizing_mode": "stretch_both"
+        },
+        "outputs": {
+            "name": "live_stream",
+            "title": "# Live Video Stream",
+            "height": 200,
+            "sizing_mode": "stretch_both"
+        },
+        "model": {
+            "name": "Model",
+            "title": "# Model",
+            "height": 200,
+            "sizing_mode": "stretch_both"
+        },
+        "log": {
+            "name": "Log",
+            "title": "# Log",
+            "height": 200,
+            "sizing_mode": "stretch_both"
+        }
+    },
+    "spacers": {
+        "1": {
+            "width": 20
+        }
+    },
+    "texts": {
+        "whp": {
+            "name": "## Well Head Pressure (bar)"
+        },
+        "flp": {
+            "name": "## Flow Line Pressure (bar)"
+        },
+        "gl_injection_rate": {
+            "name": "## Gas Lift Injection Rate ()"
+        },
+        "oil_rate_est": {
+            "name": "## Oil Rate Estimation (sm3/h)"
+        },
+        "whp_value": {
+            "name": "Value",
+            "init_value": 0,
+            "sizing_mode": "stretch_width"
+        },
+        "whp_ts": {
+            "name": "Timestamp",
+            "init_value": 0,
+            "sizing_mode": "stretch_width"
+        },
+        "whp_quality": {
+            "name": "Quality",
+            "init_value": "OK",
+            "sizing_mode": "stretch_width"
+        },
+        "flp_value": {
+            "name": "Value",
+            "init_value": 0,
+            "sizing_mode": "stretch_width"
+        },
+        "flp_ts": {
+            "name": "Timestamp",
+            "init_value": 0,
+            "sizing_mode": "stretch_width"
+        },
+        "flp_quality": {
+            "name": "Quality",
+            "init_value": "OK",
+            "sizing_mode": "stretch_width"
+        },
+        "gl_injection_rate_value": {
+            "name": "Value",
+            "init_value": 0,
+            "sizing_mode": "stretch_width"
+        },
+        "gl_injection_rate_ts": {
+            "name": "Timestamp",
+            "init_value": 0,
+            "sizing_mode": "stretch_width"
+        },
+        "gl_injection_rate_quality": {
+            "name": "Quality",
+            "init_value": "OK",
+            "sizing_mode": "stretch_width"
+        },
+        "oil_rate_est_value": {
+            "name": "Value",
+            "init_value": 0,
+            "sizing_mode": "stretch_width"
+        },
+        "oil_rate_est_ts": {
+            "name": "Timestamp",
+            "init_value": 0,
+            "sizing_mode": "stretch_width"
+        },
+        "oil_rate_est_quality": {
+            "name": "Quality",
+            "init_value": "OK",
+            "sizing_mode": "stretch_width"
+        },
+        "model_file_name": {
+            "name": "Current Model",
+            "init_value": "<< none >>",
+            "sizing_mode": "stretch_width"
+        },
+        "model_file_update_ts": {
+            "name": "Update Timestamp",
+            "init_value": "00:00",
+            "sizing_mode": "stretch_width"
+        }
+    },
+    "buttons": {
+        "capture_btn": {
+            "name": "Capture Screenshot",
+            "width": 180,
+            "type": "primary"
+        }
+    },
+    "file_inputs": {
+        "model_file_input": {
+            "width": 350
+        }
+    },
+    "notifications": {
+        "FILEMP": {
+            "message": "File name is empty. Please check.",
+            "severity": "error",
+            "duration": 5
+        },
+        "FILSUC": {
+            "message": "File \"{0}\" was loaded successfully.",
+            "severity": "success",
+            "duration": 5
+        },
+        "FILNSAV": {
+            "message": "Temporary File couldn't be saved. Error: {0}.",
+            "severity": "error",
+            "duration": 5
+        },
+        "FILINVD": {
+            "message": "Model File contents are invalid. Error: {0}.",
+            "severity": "error",
+            "duration": 5
+        },
+        "TFLNSAV": {
+            "message": "Model File cound't be saved. Error: {0}.",
+            "severity": "error",
+            "duration": 5
+        } 
+    },
+    "boolean_status": {
+        "1": {
+            "name" : "Model Valid",
+            "color" : "success"
+        },
+        "2": {
+            "name" : "App Running",
+            "color" : "success"
+        }
+    },
+    "misc": {
+        "float_format": "%.2f",
+        "datetime_format": "%m/%d/%Y-%H:%M:%S",
+        "log1_width": 1400,
+        "log1_height": 200,
+        "files_dir": "files",
+        "empty_image": "empty.png",
+        "image_size": 400
+    }
+}

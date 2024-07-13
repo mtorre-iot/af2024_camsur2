@@ -1,0 +1,37 @@
+---
+version: '3.7'
+
+services:
+  camsur:
+    image: camsur:0.0.0
+    container_name: camsur
+    restart: on-failure
+    read_only: true
+    networks:
+      - network1
+    ports:
+      - '8888:8888'
+    environment:
+      HOST: 10.80.251.4
+      PORT: 502
+      UNIT: 1
+      TIME_PERIOD: 1000
+      CONTROL_TIME_PERIOD: 1000
+      TIMEOUT: 500
+      RETRIES: 1
+    tmpfs:
+      - /temp:uid=5678,gid=5678
+    volumes:
+      - model_vol:/app/model
+      - tmp_vol:/tmp
+networks:
+  network1:
+    name: edgenet
+    external: true
+
+volumes:
+  model_vol:
+    name: model_vol
+  tmp_vol:
+    name: tmp_vol
+...

@@ -1,0 +1,26 @@
+A. With access to Sensia's jfrog:
+
+BUILD:
+docker build --push -f Dockerfile -t sensia-sensia-sdk-docker.jfrog.io/myapp:0.0.0 .
+
+RUN TEST:
+docker compose -f docker-compose-test.yml up -d
+STOP TEST:
+docker compose -f docker-compose-test.yml down -v
+
+RUN DEPLOY:
+docker compose -f docker-compose.yml up -d
+
+
+B. No access to Sensia's jfrog:
+
+BUILD:
+docker build -f Dockerfile-offline -t myapp:0.0.0 .
+
+RUN TEST:
+docker compose -f docker-compose-offline-test.yml up -d
+STOP TEST:
+docker compose -f docker-compose-offline-test.yml down -v
+
+RUN DEPLOY:
+docker compose -f docker-compose-offline.yml up -d

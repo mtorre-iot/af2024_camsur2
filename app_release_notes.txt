@@ -1,0 +1,2 @@
+0.0.0   03/11/2024  Original
+0.1.0   04/01/2024  SDK separated from app code - SDK installed as pip package
