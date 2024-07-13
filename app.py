@@ -21,6 +21,7 @@ from hcc2sdk.classes.datatype import data_type
 from hcc2sdk.classes.variablemodel import quality_enum, realtime_data
 from applib.miscfuncs import check_max_min
 import cv2
+import numpy as np
 import imutils
 from imutils.video import VideoStream
 import uuid
@@ -40,10 +41,13 @@ def app(logger, pitems, ui_config, vars, db, new_scan_event):
     logger.name = "PYAPP"                   # give your logging context a name to appear in Unity
     logger.info("App: " + appcfg['app']['name'] + ", Version: " + appcfg['app']['version']) 
     
-    image_dir = "/tmp"
+    image_dir = "/tmp/camsur"
     rtsp_url = "rtsp://admin:Sensia1!@192.168.1.81" 
     vs = VideoStream(rtsp_url).start()    # Open the RTSP stream
     jpeg_quality = 90  # Adjust this value to control the image quality (0-100)
+
+    last_mean = 0
+    first = True
 
     ############################################################ OUTER INFINITE LOOP ################################################################
     while True:
@@ -51,6 +55,10 @@ def app(logger, pitems, ui_config, vars, db, new_scan_event):
         # wait for events
         #
         ######new_scan_event.wait()
+        #
+        #  Get current sensitivity level
+        #
+        level = pitems.motion_sensitivity.value
         #
         # Get Timestamp
         #
@@ -65,13 +73,15 @@ def app(logger, pitems, ui_config, vars, db, new_scan_event):
             try:
                 for f in os.listdir(image_dir):
                     os.remove(os.path.join(image_dir, f))
-            except:
-                pass
+            except Exception as e:
+                logger.error("Error trying to delete files in image directory. Error: "  + str(e))
             
         # Grab a frame at a time
         frame = vs.read()
         
         if frame is None:
+            logger.warning("A frame from camera could not be detected. Keep trying...")
+            time.sleep(1)
             continue
 
         # Resize and display the frame on the screen
@@ -81,7 +91,16 @@ def app(logger, pitems, ui_config, vars, db, new_scan_event):
         cv2.imwrite(image_path, frame, [int(cv2.IMWRITE_JPEG_QUALITY), jpeg_quality])
        
         pitems.capture_show.object = image_path
-
+        gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
+        result = np.abs(np.mean(gray) - last_mean)
+        if first == False:
+            if result > level:
+                pitems.motion_sensitivity_label.value = "Motion Detected!"
+                logger.info("Motion detected!")
+            else:
+                pitems.motion_sensitivity_label.value = ""
+        first = False
+        last_mean = np.mean(gray)
         time.sleep(1)
         #
 

@@ -22,4 +22,6 @@ class DisplayClass(object):
         self.model_valid_ok = None
         self.app_running_ok = None
         self.capture_show = None
+        self.motion_sensitivity = None
+        self.motion_sensitivity_label = None
         

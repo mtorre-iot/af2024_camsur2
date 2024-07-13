@@ -81,3 +81,10 @@ log_widgets_style = """
   background-color: #202833;
 }
 """
+motion_detection_widgets_style = {
+  'font-family': 'Arial',
+  'font-size': '16px',
+  'color': 'red',
+  'border': '0px solid #1683fb',
+  'background-color': '#202833'
+}
