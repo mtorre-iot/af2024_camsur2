@@ -7,7 +7,6 @@ import json
 import panel as pn
 import pandas as pd
 from datetime import datetime
-from filelock import FileLock
 from UI.ui_design_lib import copyFile, send_notification
 from UI.ui_styles import header_widgets_style, body_wb_style, subbody_wb_style, log_widgets_style, body_widgets_style, header_wb_style, motion_detection_widgets_style
 from UI.classes.model import Model

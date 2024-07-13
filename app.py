@@ -9,7 +9,6 @@
 #
 # ------------------------------------------------------------------------------
 from datetime import datetime
-from filelock import FileLock
 import json
 import os
 import time
@@ -41,7 +40,8 @@ def app(logger, pitems, ui_config, vars, db, new_scan_event):
     logger.name = "PYAPP"                   # give your logging context a name to appear in Unity
     logger.info("App: " + appcfg['app']['name'] + ", Version: " + appcfg['app']['version']) 
     
-    image_dir = "/tmp/camsur"
+    image_dir = "temp/"
+    capture_dir ="motion_captured/"
     rtsp_url = "rtsp://admin:Sensia1!@192.168.1.81" 
     vs = VideoStream(rtsp_url).start()    # Open the RTSP stream
     jpeg_quality = 90  # Adjust this value to control the image quality (0-100)
@@ -98,6 +98,12 @@ def app(logger, pitems, ui_config, vars, db, new_scan_event):
                 pitems.motion_sensitivity_label.value = "Motion Detected!"
                 db.set_value("motion_det_flag", 1, quality_enum.OK)
                 logger.info("Motion detected!")
+                #
+                # Capture on disk
+                #
+                capture_path = os.path.join(capture_dir, f'image_{timestamp}.jpg')  # Use .jpg extension
+                cv2.imwrite(capture_path, frame, [int(cv2.IMWRITE_JPEG_QUALITY), jpeg_quality])
+                #
             else:
                 pitems.motion_sensitivity_label.value = ""
                 db.set_value("motion_det_flag", 0, quality_enum.OK)

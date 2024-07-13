@@ -10,7 +10,6 @@ from threading import Event, Thread, Lock
 import queue
 from types import SimpleNamespace
 
-from filelock import FileLock
 from UI.display_panel import display_panel
 from app import app
 
@@ -163,24 +162,6 @@ try:
 except Exception as e:
     print('Cannot read Variable configuration file. Program ABORTED. Error: %s', str(e))
     exit()
-#
-# Create the model.json file (if not exists)
-#
-model_desc_file_name = os.path.join(ui_config['general']['model_dir'], ui_config['general']['model_state_file_name'])
-model_file_lock_name = os.path.join(ui_config['general']['model_dir'], ui_config['general']['model_file_lock_name'])
-
-if os.path.exists(model_desc_file_name) == False:
-    logger.warning ("file: " + model_desc_file_name + " was not found. Create a new one.")
-    #
-    app_model = Model()
-    try:
-        with FileLock(model_file_lock_name):
-            json_object = json.dumps(app_model.__dict__)
-            with open(model_desc_file_name, "w") as file:
-                file.write(json_object)
-    except Exception as e:
-        print('Cannot create file: ' + model_desc_file_name + '. Program ABORTED. Error: %s', str(e))
-        exit()
 #
 # Print version
 #

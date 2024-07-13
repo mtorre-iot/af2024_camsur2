@@ -12,7 +12,7 @@ services:
     ports:
       - '8888:8888'
     environment:
-      HOST: 10.80.251.4
+      HOST: 192.168.1.41
       PORT: 502
       UNIT: 1
       TIME_PERIOD: 1000
@@ -22,16 +22,19 @@ services:
     tmpfs:
       - /temp:uid=5678,gid=5678
     volumes:
-      - model_vol:/app/model
-      - tmp_vol:/tmp
+      - motion_captured_vol:/app/motion_captured
+      - manually_captured_vol:/app/manually_captured
+      - temp_vol:/app/temp
 networks:
   network1:
     name: edgenet
     external: true
 
 volumes:
-  model_vol:
-    name: model_vol
-  tmp_vol:
-    name: tmp_vol
+  motion_captured_vol:
+    name: motion_captured_vol
+  manually_captured_vol:
+    name: manually_captured_vol
+  temp_vol:
+    name: temp_vol
 ...
