@@ -96,12 +96,14 @@ def app(logger, pitems, ui_config, vars, db, new_scan_event):
         if first == False:
             if result > level:
                 pitems.motion_sensitivity_label.value = "Motion Detected!"
+                db.set_value("motion_det_flag", 1, quality_enum.OK)
                 logger.info("Motion detected!")
             else:
                 pitems.motion_sensitivity_label.value = ""
+                db.set_value("motion_det_flag", 0, quality_enum.OK)
         first = False
         last_mean = np.mean(gray)
-        time.sleep(1)
+        time.sleep(0.5)
         #
 
 

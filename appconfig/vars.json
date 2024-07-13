@@ -5,54 +5,14 @@
         "Coils": [
         ],
         "Input_registers": [
-            { 
-                "name": "whp",
-                "collection_size": 1,
-                "type": "float",
-                "register_number": 0,
-                "num_registers": 2,
-                "writable": false,
-                "word_swap": false,
-                "byte_swap": false
-            },
-            { 
-                "name": "flp",
-                "collection_size": 1,
-                "type": "float",
-                "register_number": 2,
-                "num_registers": 2,
-                "writable": false,
-                "word_swap": false,
-                "byte_swap": false
-            },
-            { 
-                "name": "gl_injrate",
-                "collection_size": 1,
-                "type": "float",
-                "register_number": 4,
-                "num_registers": 2,
-                "writable": false,
-                "word_swap": false,
-                "byte_swap": false
-            }
         ],
         "Holding_registers": [
             { 
-                "name": "delta_p",
+                "name": "motion_det_flag",
                 "collection_size": 1,
-                "type": "float",
+                "type": "integer",
                 "register_number": 0,
-                "num_registers": 2,
-                "writable": true,
-                "word_swap": false,
-                "byte_swap": false
-            },
-            { 
-                "name": "oil_rate",
-                "collection_size": 1,
-                "type": "float",
-                "register_number": 2,
-                "num_registers": 2,
+                "num_registers": 1,
                 "writable": true,
                 "word_swap": false,
                 "byte_swap": false

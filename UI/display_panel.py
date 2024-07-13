@@ -46,7 +46,6 @@ def display_panel(logger, stream, config, ui_config, pitems, webport, new_model_
   pitems.model_file_input = pn.widgets.FileInput(width=ui_config['file_inputs']['model_file_input']['width'], stylesheets=[body_widgets_style])
   pitems.motion_sensitivity = pn.widgets.FloatInput(name="Motion Sensitivity", value = 10.00,  stylesheets=[body_widgets_style])
   pitems.motion_sensitivity_label = pn.widgets.StaticText(name="", value="", styles=motion_detection_widgets_style)
-  
   #
   # Widgetbox building 
   #
