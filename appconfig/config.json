@@ -1,6 +1,8 @@
 {
     "app": {
         "name": "camsur",
-        "version": "0.0.0"
+        "version": "0.0.0",
+        "startup_delay": 10,
+        "time_between_images": 1
     }
 }

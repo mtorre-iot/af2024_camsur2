@@ -5,7 +5,11 @@
         "model_dir": "model/",
         "temp_model_dir": "temp/",
         "model_state_file_name": "model.json",
-        "model_file_lock_name": "model.lock"
+        "model_file_lock_name": "model.lock",
+        "image_dir": "temp/",
+        "motion_capture_dir":"motion_captured/",
+        "manually_capture_dir": "manually_captured/",
+        "rtsp_url":"rtsp://admin:Sensia1!@192.168.1.81" 
     },
     "env": {
         "web_port": "WEB_PORT"

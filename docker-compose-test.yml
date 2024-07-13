@@ -22,6 +22,7 @@ services:
     tmpfs:
       - /temp:uid=5678,gid=5678
     volumes:
+      - camsur_config_vol:/app/appconfig
       - motion_captured_vol:/app/motion_captured
       - manually_captured_vol:/app/manually_captured
       - temp_vol:/app/temp
@@ -31,6 +32,8 @@ networks:
     external: true
 
 volumes:
+  camsur_config_vol:
+    name: camsur_config_vol
   motion_captured_vol:
     name: motion_captured_vol
   manually_captured_vol:

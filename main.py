@@ -8,6 +8,8 @@ from optparse import OptionParser
 import os
 from threading import Event, Thread, Lock
 import queue
+import threading
+import time
 from types import SimpleNamespace
 
 from UI.display_panel import display_panel
@@ -31,6 +33,7 @@ new_model_event = Event()
 new_scan_event.clear() # make sure events are not signaled
 new_model_event.clear()
 db_mutex = Lock()
+camera_mutex = threading.RLock()
 control_queue = queue.Queue()
 db = DB(control_queue, db_mutex) # main data DB for app
 pitems = DisplayClass()
@@ -167,6 +170,11 @@ except Exception as e:
 #
 logger.info('Engine version: ' + config.version)
 #
+# Let's wait few seconds so all containers run properly....
+logger.info("Wait for other application to settle.....")
+time.sleep(10)
+logger.info('Engine started!')
+#
 # All seems to check out. Let's start the modbus client engine
 #
 # ----------------------------------------------------------------------- #
@@ -186,7 +194,7 @@ except Exception as e:
 if webport > 0:
     logger.info("Initiating Web Server on port: " + str(webport))
     try:  
-        thread2 = Thread(target=display_panel, args=(logger, stream, config, ui_config, pitems, webport, new_model_event))
+        thread2 = Thread(target=display_panel, args=(logger, stream, config, ui_config, pitems, webport, camera_mutex))
         thread2.start()
     except Exception as e:
         logger.error("Exception trying to start Displayer. Error: " + str(e) + ". Program ABORTED.")
@@ -196,7 +204,7 @@ if webport > 0:
 # run the App thread
 # ----------------------------------------------------------------------- #
 try:  
-    thread3 = Thread(target=app, args=(logger, pitems, ui_config, vars, db, new_scan_event))
+    thread3 = Thread(target=app, args=(logger, pitems, ui_config, vars, db, camera_mutex))
     thread3.start()
 except Exception as e:
     logger.error("Exception trying to start app. Error: " + str(e) + ". Program ABORTED.")
