@@ -23,9 +23,9 @@ services:
       - /temp:uid=5678,gid=5678
     volumes:
       - camsur_config_vol:/app/appconfig
-      - motion_captured_vol:/app/motion_captured
-      - manually_captured_vol:/app/manually_captured
-      - temp_vol:/app/temp
+      - camsur_motion_captured_vol:/app/motion_captured
+      - camsur_manually_captured_vol:/app/manually_captured
+      - camsur_temp_vol:/app/temp
 networks:
   network1:
     name: edgenet
@@ -34,10 +34,10 @@ networks:
 volumes:
   camsur_config_vol:
     name: camsur_config_vol
-  motion_captured_vol:
-    name: motion_captured_vol
-  manually_captured_vol:
-    name: manually_captured_vol
-  temp_vol:
-    name: temp_vol
+  camsur_motion_captured_vol:
+    name: camsur_motion_captured_vol
+  camsur_manually_captured_vol:
+    name: camsur_manually_captured_vol
+  camsur_temp_vol:
+    name: camsur_temp_vol
 ...
