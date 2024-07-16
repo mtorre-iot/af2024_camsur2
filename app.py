@@ -11,6 +11,7 @@
 from datetime import datetime
 import json
 import os
+from threading import Thread
 import time
 import pandas as pd
 from UI.orevent import OrEvent
@@ -24,8 +25,6 @@ import numpy as np
 import imutils
 from imutils.video import VideoStream
 import uuid
-
-
 
 def app(logger, pitems, ui_config, vars, db, camera_mutex):
     appcfg_dir = 'appconfig/'
@@ -45,6 +44,8 @@ def app(logger, pitems, ui_config, vars, db, camera_mutex):
     motion_capture_dir =ui_config['general']['motion_capture_dir']
     rtsp_url = ui_config['general']['rtsp_url'] 
 
+    # col_idx = 1
+    # colors = ["dark", "success"]
     last_mean = 0
     first = True
     
@@ -61,6 +62,11 @@ def app(logger, pitems, ui_config, vars, db, camera_mutex):
             # Is camera_mutex available?
             #
             with camera_mutex:
+                # pitems.app_running_ok.color = colors[col_idx]
+                # if col_idx == 0: 
+                #     col_idx = 1 
+                # else: 
+                #     col_idx = 0
                 #
                 #  Get current sensitivity level
                 #
@@ -115,7 +121,8 @@ def app(logger, pitems, ui_config, vars, db, camera_mutex):
                         db.set_value("motion_det_flag", 0, quality_enum.OK)
                 first = False
                 last_mean = np.mean(gray)
-            time.sleep(appcfg['app']['time_between_images'])
+            
+            time.sleep(pitems.screenshot_period.value)
                 #
 
 

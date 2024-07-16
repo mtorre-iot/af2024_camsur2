@@ -65,8 +65,9 @@ def display_panel(logger, stream, config, ui_config, pitems, webport, camera_mut
   pitems.app_running_ok = pn.widgets.BooleanStatus(color=ui_config["boolean_status"]['2']['color'], value = False)
   
   pitems.model_file_input = pn.widgets.FileInput(width=ui_config['file_inputs']['model_file_input']['width'], stylesheets=[body_widgets_style])
-  pitems.motion_sensitivity = pn.widgets.FloatInput(name="Motion Sensitivity", value = 10.00,  stylesheets=[body_widgets_style])
+  pitems.motion_sensitivity = pn.widgets.FloatInput(name="Motion Sensitivity (%)", value = 10.00, width=150,  stylesheets=[body_widgets_style])
   pitems.motion_sensitivity_label = pn.widgets.StaticText(name="", value="", styles=motion_detection_widgets_style)
+  pitems.screenshot_period = pn.widgets.IntInput(name="Scan period (s)", value = 3, start=1, end=60, step=1, width=150, stylesheets=[body_widgets_style])
   #
   # Widgetbox building 
   #
@@ -114,12 +115,25 @@ def display_panel(logger, stream, config, ui_config, pitems, webport, camera_mut
      pn.Column(pitems.motion_sensitivity),
     )
   )
+  inputs_widgetbox.append(
+    pn.Row(
+      pn.Column(pitems.screenshot_period)
+    )
+  )
   inputs_widgetbox.append(pn.Row(
      pn.Column(pitems.motion_sensitivity_label),
     )
   )
 
-  #
+  # inputs_widgetbox.append(pn.Row(
+  #    pn.Column(app_running_ok_label),
+  #    pn.Column(pitems.app_running_ok)
+  #   )
+  # )
+   
+
+
+    #
   # COLUMN 2
   #
   outputs_widgetbox.append(outputs_title)
@@ -130,6 +144,7 @@ def display_panel(logger, stream, config, ui_config, pitems, webport, camera_mut
       pn.Column(pitems.capture_show)
     )
   )
+    
   #
   # ROW 2 
   #

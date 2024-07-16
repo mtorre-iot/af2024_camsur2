@@ -167,11 +167,14 @@ except Exception as e:
     exit()
 #
 # Print version
-#
+#outputs_widgetbox.append(
+    pn.Row(
+      pn.Column(pitems.screenshot_period)
+    )
 logger.info('Engine version: ' + config.version)
 #
 # Let's wait few seconds so all containers run properly....
-logger.info("Wait for other application to settle.....")
+logger.info("Wait for other applications to settle.....")
 time.sleep(10)
 logger.info('Engine started!')
 #

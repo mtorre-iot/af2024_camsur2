@@ -24,4 +24,5 @@ class DisplayClass(object):
         self.capture_show = None
         self.motion_sensitivity = None
         self.motion_sensitivity_label = None
+        self.screenshot_period = None
         
