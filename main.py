@@ -183,12 +183,12 @@ logger.info('Engine started!')
 # ----------------------------------------------------------------------- #
 # run the Modbus client scanner engine
 # ----------------------------------------------------------------------- #
-try:  
-    thread1 = Thread(target=modbus_engine, args=(logger, config, server, vars, db, new_scan_event))
-    thread1.start()
-except Exception as e:
-    logger.error("Exception trying to start modbus engine. Error: " + str(e) + ". Program ABORTED.")
-    exit()
+# try:  
+#     thread1 = Thread(target=modbus_engine, args=(logger, config, server, vars, db, new_scan_event))
+#     thread1.start()
+# except Exception as e:
+#     logger.error("Exception trying to start modbus engine. Error: " + str(e) + ". Program ABORTED.")
+#     exit()
 #
 # ----------------------------------------------------------------------- #
 # Fire the UI display panel thread
@@ -216,7 +216,7 @@ except Exception as e:
 #
 # Wait for threads to end
 #
-thread1.join()
+#thread1.join()
 thread2.join()
 thread3.join()
 logger.info("APPLICATION ENDED.")

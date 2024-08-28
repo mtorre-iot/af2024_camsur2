@@ -9,7 +9,7 @@
         "image_dir": "temp/",
         "motion_capture_dir":"motion_captured/",
         "manually_capture_dir": "manually_captured/",
-        "rtsp_url":"rtsp://admin:Sensia1!@192.168.1.81" 
+        "rtsp_url":"rtsp://admin:Sensia1!@192.168.0.3" 
     },
     "env": {
         "web_port": "WEB_PORT"
