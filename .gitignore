@@ -6,3 +6,6 @@ lib/__pycache__/
 model/__pycache__/
 UI/__pycache__/
 logs/
+manually_captured/
+motion_captured/
+

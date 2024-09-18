@@ -53,7 +53,10 @@ def app(logger, pitems, ui_config, vars, db, camera_mutex):
 
     while True:
        
-        vs = VideoStream(rtsp_url).start()    # Open the RTSP stream
+        vs = VideoStream(rtsp_url+ "/h264Preview_01_sub").start()    # Open the RTSP stream
+        width = 640
+        height = 480
+            
         jpeg_quality = 90  # Adjust this value to control the image quality (0-100)
 
         ############################################################ INNER INFINITE LOOP ################################################################
@@ -62,6 +65,9 @@ def app(logger, pitems, ui_config, vars, db, camera_mutex):
             # Is camera_mutex available?
             #
             with camera_mutex:
+                ######
+            
+                ######
                 # pitems.app_running_ok.color = colors[col_idx]
                 # if col_idx == 0: 
                 #     col_idx = 1 
@@ -70,7 +76,7 @@ def app(logger, pitems, ui_config, vars, db, camera_mutex):
                 #
                 #  Get current sensitivity level
                 #
-                level = pitems.motion_sensitivity.value
+                #####level = pitems.motion_sensitivity.value
                 #
                 # Get Timestamp
                 #
@@ -90,6 +96,7 @@ def app(logger, pitems, ui_config, vars, db, camera_mutex):
                     
                 # Grab a frame at a time
                 frame = vs.read()
+                
                 #hsvFrame = cv2.cvtColor(frame, cv2.COLOR_BGR2HSV) 
 
                 if frame is None:
@@ -208,7 +215,7 @@ def app(logger, pitems, ui_config, vars, db, camera_mutex):
                 # last_mean = np.mean(gray)
             
             #time.sleep(pitems.screenshot_period.value)
-            time.sleep(0.25)
+            time.sleep(0.5)
             #
 
 
