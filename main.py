@@ -1,18 +1,22 @@
 #
-# Mario Torre - 12/19/2023
+# Ajay Varma / Mario Torre - 09/18/2024
 #
-# HCC2 application main frame
+# Automation Fair 2024 Hands on sessions - color-commanded controller (camsur)
 #
+# -----------------------------------------------------------------------------
+#
+# App entry 
+#
+# ------------------------------------------------------------------------------
 import json
 from optparse import OptionParser
 import os
 from threading import Event, Thread, Lock
 import queue
-import threading
 import time
 from types import SimpleNamespace
 
-from UI.classes.logs import Logs, get_logger
+from UI.classes.logs import AppLogs, get_app_logger
 from UI.display_panel import display_panel
 from app import app
 
@@ -22,7 +26,6 @@ from hcc2sdk.classes.server import Server
 from UI.classes.display_class import DisplayClass
 from hcc2sdk.lib.miscfuncs import text_to_log_level
 from hcc2sdk.modbus_engine import modbus_engine
-from UI.classes.model import Model
 from hcc2sdk.config.config import Config
 #
 # Create an event to end the application when required
@@ -52,9 +55,10 @@ except Exception as e:
 #
 # configure the service logging
 #
-stream = Logs()
-logger = get_logger(__name__, stream, config.log.format)
+stream = AppLogs()
+logger = get_app_logger(__name__, stream, config.log.format)
 logger.setLevel (text_to_log_level(ui_config['misc']['log_level']))
+logger.info("Log level: " + ui_config['misc']['log_level']) 
 #
 # Read command line parameters
 # 

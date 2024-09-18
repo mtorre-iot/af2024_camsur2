@@ -6,23 +6,23 @@ import logging
 import param
 import sys
 
-class Logs(param.Parameterized):
+class AppLogs(param.Parameterized):
     value = param.String(precedence=1, label='')
     def flush(self):
         pass
     def write (self, message):
         self.value = message + self.value
 
-def get_logger(name, stream, format):
+def get_app_logger(name, stream, format):
     logger = logging.getLogger(name)
     logger.setLevel(logging.INFO)
     formatter = logging.Formatter(format)
     handler = logging.StreamHandler(stream=stream)
     handler.setFormatter(formatter)
     logger.addHandler(handler)
-    #sout = logging.StreamHandler(sys.stdout)
-    #sout.setFormatter(formatter)
-    #logger.addHandler(sout)
+    sout = logging.StreamHandler(sys.stdout)
+    sout.setFormatter(formatter)
+    logger.addHandler(sout)
     return logger
 
 def get_logger_with_file(name, file, format):

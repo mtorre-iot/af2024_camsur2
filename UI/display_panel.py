@@ -10,36 +10,12 @@ import pandas as pd
 from datetime import datetime
 from UI.ui_design_lib import copyFile, send_notification
 from UI.ui_styles import header_widgets_style, body_wb_style, subbody_wb_style, log_widgets_style, body_widgets_style, header_wb_style, motion_detection_widgets_style
-from UI.classes.model import Model
 from imutils.video import VideoStream
 import cv2
 import imutils
 
 
 def display_panel(logger, stream, config, ui_config, pitems, webport, camera_mutex):
-  #
-  # Callbacks
-  #
-  def capture_button_callback(event):
-    #
-    # lock the camera
-    #
-    with camera_mutex:
-      manually_capture_dir =ui_config['general']['manually_capture_dir']
-      rtsp_url = ui_config['general']['rtsp_url'] 
-      timestamp = time.strftime('%Y-%m-%d_%H-%M-%S')
-      
-      vs = VideoStream(rtsp_url).start()    # Open the RTSP stream
-      jpeg_quality = 90  # Adjust this value to control the image quality (0-100)
-      frame = vs.read()
-      if frame is None:
-        logger.warning("A frame from camera could not be captured...")
-      else:
-        frame = imutils.resize(frame, width = 1200)
-        image_path = os.path.join(manually_capture_dir, f'image_{timestamp}.jpg')  # Use .jpg extension
-        cv2.imwrite(image_path, frame, [int(cv2.IMWRITE_JPEG_QUALITY), jpeg_quality])
-            
-    logger.info("A new frame was captured manually...")
   #
   # Panel Initialization and general configuration
   #

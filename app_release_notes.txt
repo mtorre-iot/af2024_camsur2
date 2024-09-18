@@ -1,2 +1,2 @@
-0.0.0   07/01/2024  Original
-0.0.1   07/10/2024  added variable screensot period 
+0.0.0   09/18/2024  Original
+
