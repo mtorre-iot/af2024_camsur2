@@ -15,7 +15,7 @@
                 "PORT": "502",
                 "UNIT": "1",
                 "TIME_PERIOD": "1000",
-                "CONTROL_TIME_PERIOD": "1000",
+                "CONTROL_TIME_PERIOD": "100",
                 "TIMEOUT": "500",
                 "RETRIES": "0"
             },

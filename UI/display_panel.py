@@ -50,8 +50,12 @@ def display_panel(logger, stream, config, ui_config, pitems, webport, camera_mut
   pn.config.raw_css.append(header_widgets_style)
   pn.config.raw_css.append(body_widgets_style)
 
-  pitems.capture_btn = pn.widgets.Button(name=ui_config['buttons']['capture_btn']['name'], width=ui_config['buttons']['capture_btn']['width'], button_type=ui_config['buttons']['capture_btn']['type'], stylesheets=[body_widgets_style])
-  pitems.capture_btn.on_click(capture_button_callback)
+  red_label = pn.widgets.StaticText(name=ui_config["boolean_status"]['red']['name'], value="", stylesheets=[body_widgets_style])
+  pitems.red_label = pn.widgets.BooleanStatus(color=ui_config["boolean_status"]['red']['color'][0], value = True)
+  green_label = pn.widgets.StaticText(name=ui_config["boolean_status"]['green']['name'], value="", stylesheets=[body_widgets_style])
+  pitems.green_label = pn.widgets.BooleanStatus(color=ui_config["boolean_status"]['green']['color'][0], value = True)
+  blue_label = pn.widgets.StaticText(name=ui_config["boolean_status"]['blue']['name'], value="", stylesheets=[body_widgets_style])
+  pitems.blue_label = pn.widgets.BooleanStatus(color=ui_config["boolean_status"]['blue']['color'][0], value = True)
   #
   # Log:
   #
@@ -59,15 +63,9 @@ def display_panel(logger, stream, config, ui_config, pitems, webport, camera_mut
   #
   # General
   #
-  model_valid_ok_label = pn.widgets.StaticText(name=ui_config["boolean_status"]['1']['name'], value="", stylesheets=[body_widgets_style])
-  pitems.model_valid_ok = pn.widgets.BooleanStatus(color=ui_config["boolean_status"]['1']['color'], value = False)
-  app_running_ok_label = pn.widgets.StaticText(name=ui_config["boolean_status"]['2']['name'], value="", stylesheets=[body_widgets_style])
-  pitems.app_running_ok = pn.widgets.BooleanStatus(color=ui_config["boolean_status"]['2']['color'], value = False)
-  
-  pitems.model_file_input = pn.widgets.FileInput(width=ui_config['file_inputs']['model_file_input']['width'], stylesheets=[body_widgets_style])
-  pitems.motion_sensitivity = pn.widgets.FloatInput(name="Motion Sensitivity (%)", value = 10.00, width=150,  stylesheets=[body_widgets_style])
-  pitems.motion_sensitivity_label = pn.widgets.StaticText(name="", value="", styles=motion_detection_widgets_style)
-  pitems.screenshot_period = pn.widgets.IntInput(name="Scan period (s)", value = 3, start=1, end=60, step=1, width=150, stylesheets=[body_widgets_style])
+  #pitems.motion_sensitivity = pn.widgets.FloatInput(name="Motion Sensitivity (%)", value = 10.00, width=150,  stylesheets=[body_widgets_style])
+  #pitems.motion_sensitivity_label = pn.widgets.StaticText(name="", value="", styles=motion_detection_widgets_style)
+  #pitems.screenshot_period = pn.widgets.IntInput(name="Scan period (s)", value = 3, start=1, end=60, step=1, width=150, stylesheets=[body_widgets_style])
   #
   # Widgetbox building 
   #
@@ -80,7 +78,7 @@ def display_panel(logger, stream, config, ui_config, pitems, webport, camera_mut
   header_widgetbox.append(header_title)
   #
   # Bodies:
-  body1_widgetbox = pn.WidgetBox (name=ui_config['widgetboxes']['body1']['name'], styles=body_wb_style)
+  body1_widgetbox = pn.WidgetBox (name=ui_config['widgetboxes']['body1']['name'], height = 460, styles=body_wb_style)
   body2_widgetbox = pn.WidgetBox (name=ui_config['widgetboxes']['body2']['name'], styles=body_wb_style)
   #
   # Inputs:
@@ -92,7 +90,7 @@ def display_panel(logger, stream, config, ui_config, pitems, webport, camera_mut
   outputs_title = pn.pane.Markdown(ui_config['widgetboxes']['outputs']['title'])
   #
   # capture:
-  pitems.capture_show = pn.pane.Image(os.path.join(ui_config['misc']['files_dir'], ui_config['misc']['empty_image']), width=ui_config['misc']['image_size'])
+  pitems.capture_show = pn.pane.Image(os.path.join(ui_config['files']['dir'], ui_config['files']['empty']), width=ui_config['files']['size'])
   #
   # Log:
   log_widgetbox = pn.WidgetBox(name=ui_config['widgetboxes']['log']['name'], sizing_mode = ui_config['widgetboxes']['log']['sizing_mode'], styles=subbody_wb_style)
@@ -107,21 +105,30 @@ def display_panel(logger, stream, config, ui_config, pitems, webport, camera_mut
   # #
   # ## COLUMN 1
   # #
-  inputs_widgetbox.append(pn.Row(
-     pn.Column(pitems.capture_btn),
-    )
-  )
-  inputs_widgetbox.append(pn.Row(
-     pn.Column(pitems.motion_sensitivity),
-    )
-  )
+  #inputs_widgetbox.append(pn.Row(
+  #   pn.Column(pitems.capture_btn),
+  #  )
+  #)
+  #inputs_widgetbox.append(pn.Row(
+  #   pn.Column(pitems.motion_sensitivity),
+  #  )
+  #)
+  #inputs_widgetbox.append(
+  #  pn.Row(
+  #    pn.Column(pitems.screenshot_period)
+  #  )
+  #)
   inputs_widgetbox.append(
     pn.Row(
-      pn.Column(pitems.screenshot_period)
-    )
-  )
-  inputs_widgetbox.append(pn.Row(
-     pn.Column(pitems.motion_sensitivity_label),
+  #   pn.Column(pitems.motion_sensitivity_label),
+  #  )
+  #)
+    pn.Column(pn.Row(
+        pn.Column(red_label, pitems.red_label),
+        pn.Column(green_label, pitems.green_label),
+        pn.Column(blue_label, pitems.blue_label)
+        )
+      )
     )
   )
 
@@ -144,7 +151,6 @@ def display_panel(logger, stream, config, ui_config, pitems, webport, camera_mut
       pn.Column(pitems.capture_show)
     )
   )
-    
   #
   # ROW 2 
   #

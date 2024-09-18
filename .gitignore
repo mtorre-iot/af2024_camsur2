@@ -8,4 +8,5 @@ UI/__pycache__/
 logs/
 manually_captured/
 motion_captured/
+temp/
 

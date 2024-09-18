@@ -12,12 +12,12 @@ import threading
 import time
 from types import SimpleNamespace
 
+from UI.classes.logs import Logs, get_logger
 from UI.display_panel import display_panel
 from app import app
 
 import hcc2sdk
 from hcc2sdk.classes.db import DB
-from hcc2sdk.classes.logs import Logs, get_logger
 from hcc2sdk.classes.server import Server
 from UI.classes.display_class import DisplayClass
 from hcc2sdk.lib.miscfuncs import text_to_log_level
@@ -28,12 +28,9 @@ from hcc2sdk.config.config import Config
 # Create an event to end the application when required
 #     
 new_scan_event = Event()
-new_model_event = Event()
 
 new_scan_event.clear() # make sure events are not signaled
-new_model_event.clear()
 db_mutex = Lock()
-camera_mutex = threading.RLock()
 control_queue = queue.Queue()
 db = DB(control_queue, db_mutex) # main data DB for app
 pitems = DisplayClass()
@@ -57,9 +54,7 @@ except Exception as e:
 #
 stream = Logs()
 logger = get_logger(__name__, stream, config.log.format)
-logger.info('Panel INITIATED')
-logger.setLevel (text_to_log_level(config.log.level))
-logger.debug("User Interface Configuration file " + os.path.join(ui_config_dir, ui_config_file) + " successfully read.")
+logger.setLevel (text_to_log_level(ui_config['misc']['log_level']))
 #
 # Read command line parameters
 # 
@@ -175,7 +170,7 @@ logger.info('Engine version: ' + config.version)
 #
 # Let's wait few seconds so all containers run properly....
 logger.info("Wait for other applications to settle.....")
-time.sleep(10)
+time.sleep(3)
 logger.info('Engine started!')
 #
 # All seems to check out. Let's start the modbus client engine
@@ -183,12 +178,12 @@ logger.info('Engine started!')
 # ----------------------------------------------------------------------- #
 # run the Modbus client scanner engine
 # ----------------------------------------------------------------------- #
-# try:  
-#     thread1 = Thread(target=modbus_engine, args=(logger, config, server, vars, db, new_scan_event))
-#     thread1.start()
-# except Exception as e:
-#     logger.error("Exception trying to start modbus engine. Error: " + str(e) + ". Program ABORTED.")
-#     exit()
+try:  
+    thread1 = Thread(target=modbus_engine, args=(logger, config, server, vars, db, new_scan_event))
+    thread1.start()
+except Exception as e:
+    logger.error("Exception trying to start modbus engine. Error: " + str(e) + ". Program ABORTED.")
+    exit()
 #
 # ----------------------------------------------------------------------- #
 # Fire the UI display panel thread
@@ -197,7 +192,7 @@ logger.info('Engine started!')
 if webport > 0:
     logger.info("Initiating Web Server on port: " + str(webport))
     try:  
-        thread2 = Thread(target=display_panel, args=(logger, stream, config, ui_config, pitems, webport, camera_mutex))
+        thread2 = Thread(target=display_panel, args=(logger, stream, config, ui_config, pitems, webport, new_scan_event))
         thread2.start()
     except Exception as e:
         logger.error("Exception trying to start Displayer. Error: " + str(e) + ". Program ABORTED.")
@@ -207,7 +202,7 @@ if webport > 0:
 # run the App thread
 # ----------------------------------------------------------------------- #
 try:  
-    thread3 = Thread(target=app, args=(logger, pitems, ui_config, vars, db, camera_mutex))
+    thread3 = Thread(target=app, args=(logger, pitems, ui_config, db, new_scan_event))
     thread3.start()
 except Exception as e:
     logger.error("Exception trying to start app. Error: " + str(e) + ". Program ABORTED.")
@@ -216,7 +211,7 @@ except Exception as e:
 #
 # Wait for threads to end
 #
-#thread1.join()
+thread1.join()
 thread2.join()
 thread3.join()
 logger.info("APPLICATION ENDED.")

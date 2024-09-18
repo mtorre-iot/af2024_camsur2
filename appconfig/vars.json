@@ -3,20 +3,40 @@
         "Input_status": [
         ],
         "Coils": [
-        ],
-        "Input_registers": [
-        ],
-        "Holding_registers": [
             { 
-                "name": "motion_det_flag",
+                "name": "red",
                 "collection_size": 1,
-                "type": "integer",
+                "type": "boolean",
                 "register_number": 0,
                 "num_registers": 1,
                 "writable": true,
                 "word_swap": false,
                 "byte_swap": false
+            },
+            { 
+                "name": "green",
+                "collection_size": 1,
+                "type": "boolean",
+                "register_number": 1,
+                "num_registers": 1,
+                "writable": true,
+                "word_swap": false,
+                "byte_swap": false
+            },
+            { 
+                "name": "blue",
+                "collection_size": 1,
+                "type": "boolean",
+                "register_number": 2,
+                "num_registers": 1,
+                "writable": true,
+                "word_swap": false,
+                "byte_swap": false
             }
+        ],
+        "Input_registers": [
+        ],
+        "Holding_registers": [
         ]
     }
 }

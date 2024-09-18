@@ -2,14 +2,7 @@
     "general": {
         "port": 8888,
         "port_help": "UI web port",
-        "model_dir": "model/",
-        "temp_model_dir": "temp/",
-        "model_state_file_name": "model.json",
-        "model_file_lock_name": "model.lock",
-        "image_dir": "temp/",
-        "motion_capture_dir":"motion_captured/",
-        "manually_capture_dir": "manually_captured/",
-        "rtsp_url":"rtsp://admin:Sensia1!@192.168.1.3" 
+        "rtsp_url":"rtsp://admin:Sensia1!@192.168.1.3/h264Preview_01_sub" 
     },
     "env": {
         "web_port": "WEB_PORT"
@@ -51,12 +44,6 @@
             "height": 200,
             "sizing_mode": "stretch_both"
         },
-        "model": {
-            "name": "Model",
-            "title": "# Model",
-            "height": 200,
-            "sizing_mode": "stretch_both"
-        },
         "log": {
             "name": "Log",
             "title": "# Log",
@@ -70,100 +57,10 @@
         }
     },
     "texts": {
-        "whp": {
-            "name": "## Well Head Pressure (bar)"
-        },
-        "flp": {
-            "name": "## Flow Line Pressure (bar)"
-        },
-        "gl_injection_rate": {
-            "name": "## Gas Lift Injection Rate ()"
-        },
-        "oil_rate_est": {
-            "name": "## Oil Rate Estimation (sm3/h)"
-        },
-        "whp_value": {
-            "name": "Value",
-            "init_value": 0,
-            "sizing_mode": "stretch_width"
-        },
-        "whp_ts": {
-            "name": "Timestamp",
-            "init_value": 0,
-            "sizing_mode": "stretch_width"
-        },
-        "whp_quality": {
-            "name": "Quality",
-            "init_value": "OK",
-            "sizing_mode": "stretch_width"
-        },
-        "flp_value": {
-            "name": "Value",
-            "init_value": 0,
-            "sizing_mode": "stretch_width"
-        },
-        "flp_ts": {
-            "name": "Timestamp",
-            "init_value": 0,
-            "sizing_mode": "stretch_width"
-        },
-        "flp_quality": {
-            "name": "Quality",
-            "init_value": "OK",
-            "sizing_mode": "stretch_width"
-        },
-        "gl_injection_rate_value": {
-            "name": "Value",
-            "init_value": 0,
-            "sizing_mode": "stretch_width"
-        },
-        "gl_injection_rate_ts": {
-            "name": "Timestamp",
-            "init_value": 0,
-            "sizing_mode": "stretch_width"
-        },
-        "gl_injection_rate_quality": {
-            "name": "Quality",
-            "init_value": "OK",
-            "sizing_mode": "stretch_width"
-        },
-        "oil_rate_est_value": {
-            "name": "Value",
-            "init_value": 0,
-            "sizing_mode": "stretch_width"
-        },
-        "oil_rate_est_ts": {
-            "name": "Timestamp",
-            "init_value": 0,
-            "sizing_mode": "stretch_width"
-        },
-        "oil_rate_est_quality": {
-            "name": "Quality",
-            "init_value": "OK",
-            "sizing_mode": "stretch_width"
-        },
-        "model_file_name": {
-            "name": "Current Model",
-            "init_value": "<< none >>",
-            "sizing_mode": "stretch_width"
-        },
-        "model_file_update_ts": {
-            "name": "Update Timestamp",
-            "init_value": "00:00",
-            "sizing_mode": "stretch_width"
-        }
     },
     "buttons": {
-        "capture_btn": {
-            "name": "Capture Screenshot",
-            "width": 180,
-            "type": "primary"
-        }
     },
     "file_inputs": {
-        "model_file_input": {
-            "width": 350
-        }
     },
     "notifications": {
         "FILEMP": {
@@ -193,22 +90,38 @@
         } 
     },
     "boolean_status": {
-        "1": {
-            "name" : "Model Valid",
-            "color" : "success"
+        "red": {
+            "name" : "red",
+            "color" : ["dark", "danger"],
+            "time": 1
         },
-        "2": {
-            "name" : "Scan",
-            "color" : "success"
+        "green": {
+            "name" : "green",
+            "color" : ["dark", "success"],
+            "time": 1
+        },
+        "blue": {
+            "name" : "blue",
+            "color" : ["dark", "primary"],
+            "time": 1
         }
+    },
+    "image": {
+        "show": true,
+        "width": 640,
+        "height": 480,
+        "dir": "temp/"
+    },
+    "files": {
+        "dir": "files/",
+        "empty": "empty.png",
+        "size": 400
     },
     "misc": {
         "float_format": "%.2f",
         "datetime_format": "%m/%d/%Y-%H:%M:%S",
         "log1_width": 1400,
         "log1_height": 200,
-        "files_dir": "files",
-        "empty_image": "empty.png",
-        "image_size": 400
+        "log_level": "INFO"
     }
 }
