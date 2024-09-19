@@ -5,6 +5,7 @@
         "startup_delay": 3,
         "time_between_images": 0.5,
         "jpeg_quality": 90,
-        "capture_window_perc": 0.10
+        "capture_window_perc": 0.10,
+        "debounce_max_counter": 3
     }
 }

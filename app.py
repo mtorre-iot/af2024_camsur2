@@ -36,7 +36,7 @@ def set_capture_window(frame, perc_small_box):
     sfy1 = int((frame.shape[1] - frame.shape[1]*perc_small_box)/2)
     sfy2 = int((frame.shape[1] + frame.shape[1]*perc_small_box)/2)
     small_frame = frame[sfx1: sfx2, sfy1:sfy2]
-    focus = cv2.rectangle(frame, (sfy1, sfx1), (sfy2, sfx2),  (0, 255,0), 2)
+    #focus = cv2.rectangle(frame, (sfy1, sfx1), (sfy2, sfx2),  (0, 255,0), 2)
     return small_frame
 
 def app(logger, pitems, ui_config, db, new_scan_event):
@@ -56,6 +56,9 @@ def app(logger, pitems, ui_config, db, new_scan_event):
     rtsp_url = ui_config['general']['rtsp_url'] 
     image_dir = ui_config['image']['dir']
     cd = ColorDetector()
+    #
+    prev_combined_state = False
+    debounce_counter = 0
     #
     ############################################################ OUTER INFINITE LOOP ################################################################
 
@@ -118,25 +121,33 @@ def app(logger, pitems, ui_config, db, new_scan_event):
             # Now compare against ranges
             #
             red, green, blue = cd.detect_colors(corrected_color)
-            #
-            # Write results to HCC2
-            #
-            try:
-                db.set_value("red", red, quality_enum.OK)
-                db.set_value("green", green, quality_enum.OK)
-                db.set_value("blue", blue, quality_enum.OK)
-            except Exception as e:
-                logger.error('Cannot write data into realtime DB. Error: %s', str(e))
-            #
-            # Update screen
-            #
-            red_idx = 1 if red else 0
-            green_idx = 1 if green else 0
-            blue_idx = 1 if blue else 0
+            if (red | green | blue) != prev_combined_state:
+                debounce_counter += 1
+            else:
+                debounce_counter = 0
             
-            pitems.red_label.color = ui_config["boolean_status"]['red']['color'][red_idx]
-            pitems.green_label.color = ui_config["boolean_status"]['green']['color'][green_idx]
-            pitems.blue_label.color = ui_config["boolean_status"]['blue']['color'][blue_idx]
+            if debounce_counter >= appcfg['app']['debounce_max_counter']:
+                #
+                prev_combined_state = (red | green | blue) 
+                #
+                # Write results to HCC2
+                #
+                try:
+                    db.set_value("red", red, quality_enum.OK)
+                    db.set_value("green", green, quality_enum.OK)
+                    db.set_value("blue", blue, quality_enum.OK)
+                except Exception as e:
+                    logger.error('Cannot write data into realtime DB. Error: %s', str(e))
+                #
+                # Update screen
+                #
+                red_idx = 1 if red else 0
+                green_idx = 1 if green else 0
+                blue_idx = 1 if blue else 0
+                
+                pitems.red_label.color = ui_config["boolean_status"]['red']['color'][red_idx]
+                pitems.green_label.color = ui_config["boolean_status"]['green']['color'][green_idx]
+                pitems.blue_label.color = ui_config["boolean_status"]['blue']['color'][blue_idx]
 
             time.sleep(appcfg['app']['time_between_images'])
             

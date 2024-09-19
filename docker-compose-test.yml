@@ -1,9 +1,8 @@
 ---
-version: '3.7'
 
 services:
   camsur:
-    image: camsur:0.0.1
+    image: mariotorre/camsur:0.0.0
     container_name: camsur
     restart: on-failure
     read_only: true
@@ -16,15 +15,13 @@ services:
       PORT: 502
       UNIT: 1
       TIME_PERIOD: 1000
-      CONTROL_TIME_PERIOD: 1000
+      CONTROL_TIME_PERIOD: 500
       TIMEOUT: 500
       RETRIES: 1
     tmpfs:
       - /temp:uid=5678,gid=5678
     volumes:
       - camsur_config_vol:/app/appconfig
-      - camsur_motion_captured_vol:/app/motion_captured
-      - camsur_manually_captured_vol:/app/manually_captured
       - camsur_temp_vol:/app/temp
 networks:
   network1:
@@ -34,10 +31,6 @@ networks:
 volumes:
   camsur_config_vol:
     name: camsur_config_vol
-  camsur_motion_captured_vol:
-    name: camsur_motion_captured_vol
-  camsur_manually_captured_vol:
-    name: camsur_manually_captured_vol
   camsur_temp_vol:
     name: camsur_temp_vol
 ...

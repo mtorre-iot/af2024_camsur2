@@ -19,8 +19,6 @@ RUN mkdir appconfig/ & \
 mkdir applib/ & \
 mkdir files/ & \
 mkdir temp/ & \
-mkdir motion_captured/ & \
-mkdir manually_captured/ & \
 mkdir UI/ & \
 mkdir packages/ & 
 
@@ -37,15 +35,13 @@ COPY --chown=appuser:appuser entry_point.sh .
 RUN chmod +x entry_point.sh
 USER root:root
 RUN install -o appuser -g appuser -d -m 0755 /app/temp
-RUN install -o appuser -g appuser -d -m 0755 /app/motion_captured
-RUN install -o appuser -g appuser -d -m 0755 /app/manually_captured
 RUN install -o appuser -g appuser -d -m 0755 /app/files
 RUN install -o appuser -g appuser -d -m 0755 /app/appconfig
 USER appuser:appuser
 ENTRYPOINT ["./entry_point.sh"]
 #ENTRYPOINT [ "tail", "-f", "/dev/null" ]
 
-LABEL org.opencontainers.image.authors="ajay.varma@sensiaglobal.com>" \
+LABEL org.opencontainers.image.authors="ajay.varma@sensiaglobal.com, mario.torre@sensiaglobal.com" \
       org.opencontainers.image.vendor="Sensia Global" \
       org.opencontainers.image.url="https://www.sensiaglobal.com/" \
       org.opencontainers.image.license="Propietary" \
