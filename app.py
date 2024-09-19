@@ -121,14 +121,14 @@ def app(logger, pitems, ui_config, db, new_scan_event):
             # Now compare against ranges
             #
             red, green, blue = cd.detect_colors(corrected_color)
-            if (red | green | blue) != prev_combined_state:
+            if (4* red + 2 * green + blue) != prev_combined_state:
                 debounce_counter += 1
             else:
                 debounce_counter = 0
             
             if debounce_counter >= appcfg['app']['debounce_max_counter']:
                 #
-                prev_combined_state = (red | green | blue) 
+                prev_combined_state = (4 * red + 2 * green + blue) 
                 #
                 # Write results to HCC2
                 #
