@@ -88,7 +88,7 @@ def app(logger, pitems, ui_config, db, new_scan_event):
 
             if frame is None:
                 logger.warning("A frame from camera could not be detected. Keep trying...")
-                time.sleep(app['app']['time_between_images'])
+                time.sleep(appcfg['app']['time_between_images'])
                 break
             #
             # initialize detector
