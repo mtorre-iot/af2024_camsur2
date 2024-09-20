@@ -62,32 +62,7 @@
     },
     "file_inputs": {
     },
-    "notifications": {
-        "FILEMP": {
-            "message": "File name is empty. Please check.",
-            "severity": "error",
-            "duration": 5
-        },
-        "FILSUC": {
-            "message": "File \"{0}\" was loaded successfully.",
-            "severity": "success",
-            "duration": 5
-        },
-        "FILNSAV": {
-            "message": "Temporary File couldn't be saved. Error: {0}.",
-            "severity": "error",
-            "duration": 5
-        },
-        "FILINVD": {
-            "message": "Model File contents are invalid. Error: {0}.",
-            "severity": "error",
-            "duration": 5
-        },
-        "TFLNSAV": {
-            "message": "Model File cound't be saved. Error: {0}.",
-            "severity": "error",
-            "duration": 5
-        } 
+    "notifications": {  
     },
     "boolean_status": {
         "red": {

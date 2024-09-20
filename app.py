@@ -29,7 +29,6 @@ def initialize_image_dir(image_dir):
         for f in os.listdir(image_dir):
             os.remove(os.path.join(image_dir, f))
 
-
 def set_capture_window(frame, perc_small_box):
     sfx1 = int((frame.shape[0] - frame.shape[0]*perc_small_box)/2)
     sfx2 = int((frame.shape[0] + frame.shape[0]*perc_small_box)/2)
@@ -38,7 +37,9 @@ def set_capture_window(frame, perc_small_box):
     small_frame = frame[sfx1: sfx2, sfy1:sfy2]
     #focus = cv2.rectangle(frame, (sfy1, sfx1), (sfy2, sfx2),  (0, 255,0), 2)
     return small_frame
-
+#
+# Main APP entry point
+#
 def app(logger, pitems, ui_config, db, new_scan_event):
     appcfg_dir = 'appconfig/'
     appcfg_file = 'config.json'
@@ -60,13 +61,13 @@ def app(logger, pitems, ui_config, db, new_scan_event):
     prev_combined_state = False
     debounce_counter = 0
     #
-    ############################################################ OUTER INFINITE LOOP ################################################################
+    ############################################OUTER INFINITE LOOP ########################################
 
     while True:
         vs = VideoStream(rtsp_url).start()    # Open the RTSP stream
         jpeg_quality = appcfg['app']['jpeg_quality']  # Adjust this value to control the image quality (0-100)
         logger.info("video streaming started.")
-        ############################################################ INNER INFINITE LOOP ################################################################
+        ################################### INNER INFINITE LOOP ############################################
         while True:
             #
             # initialize any image capture
