@@ -2,7 +2,7 @@
 
 services:
   camsur:
-    image: mariotorre/camsur:0.0.1
+    image: camsur:0.0.1
     container_name: camsur
     restart: on-failure
     read_only: true
